@@ -1,0 +1,15 @@
+.form-group {
+    margin-bottom: 15px;
+}
+.form-control {
+    width: 250px; /* Adjust width as needed */
+    display: inline-block;
+    vertical-align: middle;
+}
+.btn-primary {
+    background-color: #0088cc; /* Telegram blue */
+    border-color: #0088cc; /* Telegram blue */
+    color: #fff; /* White text */
+    display: inline-block;
+    vertical-align: middle;
+}

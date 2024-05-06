@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lexi Smart - Configure Timetable</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/config_calendar.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Lexi Smart</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('user_authentication.dashboard') }}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('about') }}">About</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Products
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ url_for('chatbot.chatbot') }}">Chatbot</a>
+                <a class="dropdown-item" href="{{ url_for('ai_calendar.ai_calendar') }}">AI Calendar</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Coming Soon..</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <br>
+    <h3>Step 0: Start a new day!</h3>
+    <br>
+    <a href="{{ url_for('ai_calendar.remove_all_entries') }}" class="button">
+        <button type="button" class="btn btn-info">Start a new day!</button>
+    </a>
+    <br>
+
+    <br>
+    <h3>Step 1: Update the subjects you would like to cycle through</h3>
+    <br>
+    <form method="POST">
+        {{ subject_form.hidden_tag() }}
+        <div>
+            {{ subject_form.subject.label }}
+            {{ subject_form.subject(size=32, class="form-control"   ) }}
+        </div>
+        <div>
+            {{ subject_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>    
+    <table class="table table-bordered">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">#</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for index, subject in enumerate(subjects, start=1) %}
+          <tr class="table-primary">
+            <th scope="row">{{ index }}</th>
+            <td class="table-primary">{{ subject.subject }}</td>
+            <td class="table-primary">
+              <form method="POST" action="{{ url_for('ai_calendar.remove_subject', subject_id=subject.id) }}" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Remove</button>
+              </form>
+            </td>
+          </tr class="table-primary">
+          {% endfor %}
+          {% if not subjects %}
+          <tr>
+            <td colspan="3" class="table-primary">No subjects added yet.</td>
+          </tr class="table-primary">
+          {% endif %}
+        </tbody>
+      </table>
+
+      <br>
+      <h3>Step 2: Update your freetime (Repeat this step if you do not intent to update your subjects)</h3>
+      <br>
+      <form method="POST">
+        {{ freetime_form.hidden_tag() }}
+        <div>
+            {{ freetime_form.freetime.label }}
+            {{ freetime_form.freetime(class="form-control") }}
+        </div>
+        <div>
+            {{ freetime_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>    
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">#</th>
+                <th scope="col">Free Time Slots</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, freetime in enumerate(freetime, start=1) %}
+            <tr class="table-primary">
+                <th scope="row">{{ index }}</th>
+                <td class="table-primary">{{ freetime.freetime }}</td>
+                <td class="table-primary">
+                    <form method="POST" action="{{ url_for('ai_calendar.remove_freetime', freetime_id=freetime.id) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not freetime %}
+            <tr>
+                <td colspan="3" class="table-primary">No freetime slots added yet.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <br>
+    <h3>Step 3: Ready to become productive? Click the button below!</h3>
+    <br>
+    <a href="{{ url_for('ai_calendar.generate_tasks') }}" class="button">
+        <button type="button" class="btn btn-info">Generate!</button>
+    </a>
+
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

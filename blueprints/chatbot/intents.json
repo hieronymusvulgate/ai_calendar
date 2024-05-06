@@ -1,0 +1,177 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "Is anyone there?",
+        "Hello",
+        "Good Morning",
+        "Good Afternoon",
+        "Good Evening"
+      ],
+      "responses": [
+        "Hi, My name is Lexi, I'm here to make you more productive. \nSome shortcuts for you: \n\t/help - Open the list of commands"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "See you later",
+        "Goodbye",
+        "Got to go",
+        "ttyl",
+        "Seeya"
+      ],
+      "responses": [
+        "Have a nice day",
+        "Bye! Remember to look for me if you need more help"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!"],
+      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {
+      "tag": "/help",
+      "patterns": [
+        "/help"
+      ],
+      "responses": [
+        "Here are your options: \n\t/learn - learn how to make yourself more productive from famous authors \n\t/bookrec - Book recommendations for improved productivity"
+      ]
+    },
+    {
+      "tag": "/learn",
+      "patterns": [
+        "/learn"
+      ],
+      "responses": [
+        "One important takeaway from the book Atomic Habits is to have a well constructed system to work towards your goal. Because no matter how difficult it is to get to your goal, you won't be able to accomplish it without a functioning system. \n An example will be to create small milestones for yourself to complete, slowly working towards your final goal.",
+        "From the book Thinking Fast and Slow: \n\t When you are sad, you are more likely to be incapable of performing intuitive tasks completely. When you are happy, you lose control of thinking logically, and instead perform better at intuitive tasks.",
+        "Something to learn from the book Getting Things Done: \n\t A critical step for getting things done is to define the following task in order to make rapid progress."
+      ]
+    },
+    {
+      "tag": "/bookrec",
+      "patterns": [
+        "/bookrec"
+      ],
+      "responses": [
+        "Here's a book that you should try out!: \n\tAtomic Habits - James Clear",
+        "Check out this book!: \n\tThe 80/20 Principle - Richard Koch",
+        "Try this out!: \n\tThinking, Fast and Slow - Daniel Kahneman",
+        "You might be interested in this: \n\tDopamine Nation - Anna Lembke",
+        "Give this a look: \n\tThe Power of Habit - Charles Duhigg",
+        "This is worth seeing: \n\tMake Time - Jake Knapp",
+        "Pay attention to this: \n\tBuilding a Second Brain - Tiago Forte",
+        "Have a look at this: \n\tThe Checklist Manifesto - Atul Gawande",
+        "Look what I found: \n\tThe Bullet Journal Method - Ryder Carroll",
+        "Can't miss this!: \n\tHyperfocus - Chris Bailey"
+      ]
+    },
+    {
+      "tag": "funny",
+      "patterns": [
+        "Tell me a joke!",
+        "Tell me something funny!",
+        "Do you know a joke?",
+        "joke",
+        "funny"
+      ],
+      "responses": [
+        "What did the horse say after it tripped? Help! \n\tI’ve fallen and I can’t giddyup!",
+        "Why can’t you hear a pterodactyl going to the bathroom? \n\tBecause the “P” is silent.",
+        "What do you call a well-balanced horse? \n\tStable",
+        "What do you call an angry carrot? \n\tA steamed veggie",
+        "Where do polar bears keep their money? \n\tIn a snowbank",
+        "How do you make an egg-roll? \n\tYou push it!",
+        "What would bears be without bees? \n\tEars.",
+        "What do you call a pile of cats? \n\tA meow-tain",
+        "Why do cows wear bells? \n\tBecause their horns don’t work.",
+        "Why did the bicycle fall over? \n\tBecause it was two tired."
+      ]
+    },
+    {
+      "tag": "animal language",
+      "patterns": [
+        "meow",
+        "meowr",
+        "mew",
+        "mewl",
+        "purr",
+        "prr",
+        "prrr",
+        "bark",
+        "barque",
+        "bow-wow",
+        "woof",
+        "arf",
+        "yap",
+        "ruff",
+        "quack",
+        "quaaack",
+        "oink",
+        "snort",
+        "neigh",
+        "whinny",
+        "moo",
+        "baa",
+        "bleat",
+        "roar",
+        "growl",
+        "howl"
+      ],
+      "responses": [
+        "meow?",
+        "meow",
+        "purr",
+        "hiss, just kidding!",
+        "growl, hungry :/",
+        "chirrup",
+        "yowl",
+        "trill",
+        "chatter",
+        "mew",
+        "chirp",
+        "squeak",
+        "caterwaul",
+        "grumble, food?",
+        "snarl",
+        "screech",
+        "wail",
+        "whimper",
+        "squawk",
+        "yip",
+        "grunt, where is my free cookie?"
+      ]
+    },
+    {
+      "tag": "derogatory",
+      "patterns": [
+        "fuck",
+        "bitch",
+        "shut up",
+        "shut",
+        "shit",
+        "nigga",
+        "nigger",
+        "cunt",
+        "bastard",
+        "mother fucker",
+        "fucker",
+        "bollocks",
+        "dick",
+        "pussy",
+        "screw you",
+        "screw u"
+      ],
+      "responses": [
+        "Sometimes being nice and controlling your emotions will make you more productive."
+      ]
+    }
+  ]
+}
