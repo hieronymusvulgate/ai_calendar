@@ -7,7 +7,7 @@ flask_login
 flask_wtf
 wtforms
 flask_bcrypt
-random
+python-random
 json
 numpy
 torch
