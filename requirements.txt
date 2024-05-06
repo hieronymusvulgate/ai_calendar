@@ -7,10 +7,6 @@ flask_login
 flask_wtf
 wtforms
 flask_bcrypt
-python-random
-json
-numpy
 torch
 nltk
 gunicorn
-python-math
