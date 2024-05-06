@@ -6,7 +6,7 @@ flask_mail
 flask_login
 flask_wtf
 wtforms
-flask_bycrypt
+flask_bcrypt
 random
 json
 numpy
