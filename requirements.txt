@@ -1,7 +1,6 @@
 flask
 flask_sqlalchemy
 python-dotenv
-math
 datetime
 flask_mail
 flask_login
@@ -13,3 +12,5 @@ json
 numpy
 torch
 nltk
+gunicorn
+python-math
