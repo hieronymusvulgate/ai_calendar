@@ -7,7 +7,7 @@ from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 import random
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import json
 #pip install flask flask_sqlalchemy flask_login flask_bcrypt flask_wtf wtforms email_validator
 
@@ -119,7 +119,7 @@ def dashboard():
         quotes = json.load(file)
         random_quote = random.choice(quotes['quotes'])
     username = current_user.username
-    current_hour = datetime.now().hour
+    current_hour = datetime.now(timezone(timedelta(hours=8))).hour
     if 5 <= current_hour < 12:
         time_of_day = "☀️Good Morning "
     elif 12 <= current_hour < 18:

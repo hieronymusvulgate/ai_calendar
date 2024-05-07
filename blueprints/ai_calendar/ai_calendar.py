@@ -158,27 +158,30 @@ def remove_freetime(freetime_id):
 
 @ai_calendar_bp.route('/generate_tasks')
 def generate_tasks():
-    if current_user.last_generated != str(date.today()):
-        Assignments.query.filter_by(user_id = current_user.id).delete()
-        user_freetimes = current_user.freetime
-        time_slots = [freetime.freetime for freetime in user_freetimes]
-        user_subjects = current_user.subjects
-        subjects_list = [subject.subject for subject in user_subjects]
-        time_slots_len = len(time_slots)
-        optimizer = current_user.optimizer
-        slots_to_select = math.floor((time_slots_len * optimizer) / 10)
-        selected_slots = random.sample(time_slots, slots_to_select)
-        assignments = {}
-        num_subjects = len(subjects_list)
-        for i, slot in enumerate(selected_slots):
-            subject_index = i % num_subjects
-            subject = subjects_list[subject_index]
-            assignments[slot] = subject
-        for time_slot, subject in assignments.items():
-            assignment = Assignments(user=current_user, time_slot=time_slot, subject=subject)
-            db.session.add(assignment)
-        current_user.last_generated = date.today()
-        db.session.commit()
+    if current_user.freetime:
+        if current_user.last_generated != str(date.today()):
+            Assignments.query.filter_by(user_id = current_user.id).delete()
+            user_freetimes = current_user.freetime
+            time_slots = [freetime.freetime for freetime in user_freetimes]
+            user_subjects = current_user.subjects
+            subjects_list = [subject.subject for subject in user_subjects]
+            time_slots_len = len(time_slots)
+            optimizer = current_user.optimizer
+            slots_to_select = math.floor((time_slots_len * optimizer) / 10)
+            if slots_to_select == 0:
+                slots_to_select = 1
+            selected_slots = random.sample(time_slots, slots_to_select)
+            assignments = {}
+            num_subjects = len(subjects_list)
+            for i, slot in enumerate(selected_slots):
+                subject_index = i % num_subjects
+                subject = subjects_list[subject_index]
+                assignments[slot] = subject
+            for time_slot, subject in assignments.items():
+                assignment = Assignments(user=current_user, time_slot=time_slot, subject=subject)
+                db.session.add(assignment)
+            current_user.last_generated = date.today()
+            db.session.commit()
         
     return redirect(url_for('ai_calendar.ai_calendar'))
 
