@@ -6,6 +6,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
+import secrets
+import string
 import random
 from datetime import datetime, timezone, timedelta
 import json
@@ -38,7 +40,9 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 def generate_otp():
-    return str(random.randint(100000, 999999))
+    characters = string.ascii_letters + string.digits + string.punctuation
+    length = random.randint(6, 10)
+    return ''.join(secrets.choice(characters) for _ in range(length))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -81,15 +85,13 @@ class RegisterForm(FlaskForm):
         existing_user_username = User.query.filter_by(
             username=username.data).first()
         if existing_user_username:
-            raise ValidationError(
-                'That username already exists. Please choose a different one.')
+            raise ValidationError('That username already exists. Please choose a different one.')
     
     def validate_email(self, email):
         existing_user_email = User.query.filter_by(
             email=email.data).first()
         if existing_user_email:
-            raise ValidationError(
-                'That email already exists. Please choose a different one.')
+            raise ValidationError('That email already exists. Please choose a different one.')
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[
@@ -99,6 +101,16 @@ class LoginForm(FlaskForm):
                              InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
 
     submit = SubmitField('Login')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is None:
+            raise ValidationError('Username does not exist.')
+
+    def validate_password(self, password):
+        user = User.query.filter_by(username=self.username.data).first()
+        if user and not bcrypt.check_password_hash(user.password, password.data):
+            raise ValidationError('Password is incorrect.')
 
 @user_authentication_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -147,7 +159,6 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('user_authentication.login'))
-
     return render_template('register.html', form=form)
 
 @user_authentication_bp.route('/forgot_password', methods=['GET', 'POST'])
@@ -159,7 +170,7 @@ def forgot_password():
             otp = generate_otp()
             session['reset_email'] = email
             session['otp'] = otp
-            msg = Message('Password Reset OTP', sender='your_email@gmail.com', recipients=[email])
+            msg = Message('Password Reset OTP', sender='orcinusbiz@gmail.com', recipients=[email])
             msg.body = f"Your OTP for password reset is: {otp}"
             mail.send(msg)
             flash('An OTP has been sent to your email address.', 'success')

@@ -17,7 +17,7 @@
     <input type="radio" id="forgotForm" name="formToggle">
   
     <div class="wrapper" id="loginFormContent">
-        <form method="POST" action="">
+        <form method="POST" action="{{ url_for('user_authentication.register') }}">
             {{ form.hidden_tag() }}
             <h1>Sign Up</h1>
             <div class="input-box">
@@ -33,15 +33,26 @@
             <div class="link">
                 <a href="{{ url_for('user_authentication.login') }}">Already have an account? Log In</a><br>
                 <a href="{{ url_for('index') }}">Return to mainpage</a>
-                
             </div>
+            {% if form.username.errors %}
+            <div class="error">{{ form.username.errors[0] }}</div>
+            {% endif %}
+            {% if form.email.errors %}
+            <div class="error">{{ form.email.errors[0] }}</div>
+            {% endif %}
+            {% if form.password.errors %}
+            <div class="error">{{ form.password.errors[0] }}</div>
+            {% endif %}
         </form>
+        
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                    </div>
+                    {% if message %}
+                        <script>
+                            alert("{{ message }}");
+                        </script>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         {% endwith %}
