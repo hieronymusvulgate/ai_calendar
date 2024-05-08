@@ -53,6 +53,7 @@ class User(db.Model, UserMixin):
     pro_token = db.Column(db.Float, default=0, nullable=False)
     optimizer = db.Column(db.Integer, default=4, nullable=True)
     last_generated = db.Column(db.Date, default=date(1999, 1, 1), nullable=True)
+    tokens_earned_today = db.Column(db.Float, default=0, nullable=False)
     subjects = db.relationship('Subject', backref='user', lazy=True)
     freetime = db.relationship('Freetime', backref='user', lazy=True)
     assignments = db.relationship('Assignments', backref='user', lazy=True)

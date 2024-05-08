@@ -158,6 +158,10 @@ def remove_freetime(freetime_id):
 
 @ai_calendar_bp.route('/generate_tasks')
 def generate_tasks():
+    user = User.query.get(current_user.id)
+    if user.last_generated != date.today():
+        user.tokens_earned_today = 0
+        db.session.commit()
     if current_user.freetime:
         if current_user.last_generated != date.today():
             Assignments.query.filter_by(user_id = current_user.id).delete()
@@ -200,8 +204,10 @@ def task_completed():
         db.session.delete(assignment)
         db.session.commit()
         user = User.query.get(current_user.id)
-        user.pro_token += 1
-        db.session.commit()
+        if current_user.tokens_earned_today < 7:
+            user.pro_token += 1
+            user.tokens_earned_today += 1
+            db.session.commit()
     return redirect(url_for('ai_calendar.ai_calendar'))
 
 @ai_calendar_bp.route('/remove_all_tasks')
