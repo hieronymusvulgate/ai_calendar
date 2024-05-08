@@ -11,6 +11,7 @@ import string
 import random
 from datetime import datetime, timezone, timedelta
 import json
+from datetime import date
 #pip install flask flask_sqlalchemy flask_login flask_bcrypt flask_wtf wtforms email_validator
 
 # Email reset
@@ -51,7 +52,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
     pro_token = db.Column(db.Float, default=0, nullable=False)
     optimizer = db.Column(db.Integer, default=4, nullable=True)
-    last_generated = db.Column(db.String(50),default='happi cat', nullable=True)
+    last_generated = db.Column(db.Date, default=date(1999, 1, 1), nullable=True)
     subjects = db.relationship('Subject', backref='user', lazy=True)
     freetime = db.relationship('Freetime', backref='user', lazy=True)
     assignments = db.relationship('Assignments', backref='user', lazy=True)

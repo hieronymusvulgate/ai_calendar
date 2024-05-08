@@ -159,7 +159,7 @@ def remove_freetime(freetime_id):
 @ai_calendar_bp.route('/generate_tasks')
 def generate_tasks():
     if current_user.freetime:
-        if current_user.last_generated != str(date.today()):
+        if current_user.last_generated != date.today():
             Assignments.query.filter_by(user_id = current_user.id).delete()
             user_freetimes = current_user.freetime
             time_slots = [freetime.freetime for freetime in user_freetimes]
@@ -209,4 +209,3 @@ def remove_all_tasks():
     Assignments.query.filter_by(user_id=current_user.id).delete()
     db.session.commit()
     return redirect(url_for('ai_calendar.ai_calendar'))
-

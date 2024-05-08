@@ -12,3 +12,4 @@ nltk
 numpy
 gunicorn
 psycopg2-binary
+apscheduler
