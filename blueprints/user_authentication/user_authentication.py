@@ -75,6 +75,18 @@ class Assignments(db.Model):
     time_slot = db.Column(db.String(100), nullable=False)
     subject = db.Column(db.String(100), nullable=False)
 
+# Forum start
+# class ForumPost(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     title = db.Column(db.String, nullable=False)
+#     description = db.Column(db.String)
+
+# class Comment(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     text = db.Column(db.String, nullable=False)    
+#     forum_post_id = db.Column(db.String)
+# Forum End
+
 class RegisterForm(FlaskForm):
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
