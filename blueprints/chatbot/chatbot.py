@@ -42,7 +42,7 @@ def get_response(sentence):
     if tag == intent['tag']:
       return random.choice(intent['responses'])
 
-@chatbot_bp.route('/chatbot')
+@chatbot_bp.route('/')
 def chatbot():
   return render_template("chatbot.html")
 

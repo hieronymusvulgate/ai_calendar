@@ -14,6 +14,7 @@ load_dotenv()
 from blueprints.chatbot.chatbot import chatbot_bp
 from blueprints.ai_calendar.ai_calendar import ai_calendar_bp
 from blueprints.user_authentication.user_authentication import user_authentication_bp, init_app, db, User
+from blueprints.forum.forum import forum_bp
 
 
 app = Flask(__name__)
@@ -21,6 +22,7 @@ app = Flask(__name__)
 app.register_blueprint(user_authentication_bp)
 app.register_blueprint(chatbot_bp, url_prefix='/chatbot')
 app.register_blueprint(ai_calendar_bp, url_prefix='/ai_calendar')
+app.register_blueprint(forum_bp, url_prefix='/forum')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')

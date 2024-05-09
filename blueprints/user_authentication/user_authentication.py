@@ -12,6 +12,7 @@ import random
 from datetime import datetime, timezone, timedelta
 import json
 from datetime import date
+from functools import wraps
 #pip install flask flask_sqlalchemy flask_login flask_bcrypt flask_wtf wtforms email_validator
 
 # Email reset
@@ -216,3 +217,20 @@ def reset_password():
             return redirect(url_for('user_authentication.login'))
 
     return render_template('reset_password.html')
+
+def token_required_forum(min_pro_token):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if current_user.is_authenticated:
+                if current_user.pro_token >= min_pro_token:
+                    return f(*args, **kwargs)
+                else:
+                    flash('Minimum tokens required is 24, you have insufficient tokens.')
+                    return redirect(url_for('user_authentication.dashboard'))
+            else:
+                flash('Please login to access this page.')
+                return redirect(url_for('user_authentication.login'))
+        return decorated_function
+    return decorator
+
